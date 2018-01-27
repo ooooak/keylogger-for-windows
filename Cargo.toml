@@ -4,5 +4,7 @@ version = "0.1.0"
 authors = ["Ak <akshay.deep0@gmail.com>"]
 
 [dependencies]
-winapi = "0.3.4"
+libc = "0.2.17"
+winapi = { version = "0.3.4", features = ["winbase"] }
 user32-sys = "0.1.2"
+kernel32-sys = "0.2.2"
