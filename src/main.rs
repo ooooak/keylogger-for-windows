@@ -9,6 +9,7 @@ use std::env;
 
 const LOG_FILE: &str = "records.data";
 const LOG_AFTER: u64 = 20; // sec
+const STORE_KEYS: bool = false;
 
 fn timestamp() -> u64 {
 	match time::SystemTime::now().duration_since(time::UNIX_EPOCH) {
@@ -38,9 +39,17 @@ fn start_logger(){
 
 	loop {
 		thread::sleep(time::Duration::from_millis(10));
-		for i in 1..256 {
+		for i in 0..256 {
 			if unsafe { user32::GetAsyncKeyState(i) } == -32767 {
-				collection.push(i);
+				if STORE_KEYS { 
+          collection.push(i);
+        } else{
+          collection.push(match i {
+            1 => 1,
+            2 => 2,
+            _ => 0,
+          });
+        }
 			}
 
 			// log to file after specified time 
